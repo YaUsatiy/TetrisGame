@@ -9,7 +9,6 @@ public class FlyFigure {
     private Figures figure;
     private Coord coord;
     private boolean landed;
-    private int ticks;
     Mapable map;
 
     public FlyFigure(Mapable map){
@@ -17,7 +16,6 @@ public class FlyFigure {
         figure = Figures.getRandom();
         coord = new Coord(Config.WIDTH/2 -1,-1);
         landed = false;
-        ticks = 2;
     }
 
     public Figures getFigure() {
@@ -58,12 +56,8 @@ public class FlyFigure {
         if (canMoveFigure(figure, sx, sy))
             coord = coord.plus(sx, sy);
         else {
-            if (sy == 1){
-                if (ticks > 0)
-                    ticks--;
-                else
-                    landed = true;
-            }
+            if (sy == 1)
+                landed = true;
         }
     }
 

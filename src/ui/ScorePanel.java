@@ -11,15 +11,16 @@ public class ScorePanel extends JPanel {
     public ScorePanel(Window window){
         this.window = window;
         setBackground(Color.lightGray);
-        setSize(Config.WIDTH * Config.SIZE, Config.SCORE_HEIGHT);
         setBounds(0,Config.HEIGHT * Config.SIZE +10, Config.WIDTH * Config.SIZE, Config.SCORE_HEIGHT);
-
-        scoreField = new JTextField("СЧЁТ : 0");
-        //scoreField.setBounds();
-        lineField = new JTextField("РЯДЫ : 0");
-        this.add(scoreField);
-        this.add(lineField);
-        setLayout(null);
+        scoreField = new JTextField("  СЧЁТ : 0 ");
+        scoreField.setColumns(9);
+        scoreField.setEditable(false);
+        lineField = new JTextField("  РЯДЫ : 0 ");
+        lineField.setColumns(7);
+        lineField.setEditable(false);
+        add(scoreField);
+        add(lineField);
         window.add(this);
     }
+
 }

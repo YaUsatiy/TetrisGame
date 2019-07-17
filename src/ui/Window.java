@@ -5,6 +5,7 @@ import service.FlyFigure;
 import service.Mapable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -17,18 +18,23 @@ public class Window extends JFrame implements Runnable, Mapable{
     private FlyFigure flyFigure;
     private Timer timer;
     private static boolean paused = false;
-    public int score = 0; //для ряда и для каждой фигуры
+    public int score = 0;
     public int dropLines = 0;
 
     public Window(){
         boxes = new Box[Config.WIDTH][Config.HEIGHT];
         initForm();
         initBoxes();
+        addScore();
         addKeyListener(new FieldKeyListener());
         FieldTimeListener fieldTimeListener = new FieldTimeListener();
-        timer = new Timer(0750, fieldTimeListener);
+        if (AuxiliaryWindow.easy)
+            timer = new Timer(750, fieldTimeListener);
+        else if (AuxiliaryWindow.medium)
+            timer = new Timer(300, fieldTimeListener);
+        else
+            timer = new Timer(150, fieldTimeListener);
         timer.start();
-        ScorePanel scorePanel = new ScorePanel(this);
     }
 
     private void initForm(){
@@ -36,9 +42,15 @@ public class Window extends JFrame implements Runnable, Mapable{
                 Config.HEIGHT*Config.SIZE + 37 + Config.SCORE_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
-        setTitle("THE Tetris");
+        setFocusable(true);
+        if (AuxiliaryWindow.easy)
+            setTitle("THE Tetris : easy");
+        else if (AuxiliaryWindow.medium)
+            setTitle("THE Tetris : medium");
+        else
+            setTitle("THE Tetris : difficult");
         setLayout(null);
+        setResizable(false);
     }
 
     private void initBoxes(){
@@ -48,13 +60,11 @@ public class Window extends JFrame implements Runnable, Mapable{
                 add(boxes[x][y]);
             }
         }
+        setVisible(true);
     }
 
-    @Override
-    public void run() {
-//        initForm();
-//        initBoxes();
-        repaint();
+    private void addScore(){
+        ScorePanel scorePanel = new ScorePanel(this);
     }
 
     public void addFigure(){
@@ -64,8 +74,9 @@ public class Window extends JFrame implements Runnable, Mapable{
             showFigure();
         }
         else {
-            System.exit(0);
-            return;
+            timer.stop();
+            timer = null;
+            RepeatFrame repeatFrame = new RepeatFrame();//в поле класса вынести
         }
         showFigure();
     }
@@ -129,7 +140,6 @@ public class Window extends JFrame implements Runnable, Mapable{
                     break;
                 }
                 case (KeyEvent.VK_UP)    : turnFly(2);
-                //case (KeyEvent.VK_DOWN)  : turnFly(2);
                 case (KeyEvent.VK_DOWN)  : moveFly(0, +1); break;
             }
         }
@@ -157,7 +167,15 @@ public class Window extends JFrame implements Runnable, Mapable{
                 return false;
             score += Config.LINE_SCORE;
             dropLines++;
+            ScorePanel.scoreField.setText("  СЧЁТ : " + score + "  ");
+            ScorePanel.lineField.setText("  РЯДЫ : " + dropLines + "  ");
             return true;
+    }
+
+    @Override
+    public void run() {
+        repaint();
+        revalidate();
     }
 
     class FieldTimeListener implements ActionListener{
@@ -168,6 +186,7 @@ public class Window extends JFrame implements Runnable, Mapable{
                 showFigure(2);
 
                 score += Config.FIGURE_SCORE;
+                ScorePanel.scoreField.setText("  CЧЁТ : " + score + "  ");
 
                 stripLines();
                 addFigure();
