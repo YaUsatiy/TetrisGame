@@ -5,7 +5,6 @@ import service.FlyFigure;
 import service.Mapable;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,8 +17,8 @@ public class Window extends JFrame implements Runnable, Mapable{
     private FlyFigure flyFigure;
     private Timer timer;
     private static boolean paused = false;
-    public int score = 0;
-    public int dropLines = 0;
+    private int score = 0;
+    private int dropLines = 0;
 
     public Window(){
         boxes = new Box[Config.WIDTH][Config.HEIGHT];
@@ -76,7 +75,7 @@ public class Window extends JFrame implements Runnable, Mapable{
         else {
             timer.stop();
             timer = null;
-            RepeatFrame repeatFrame = new RepeatFrame();//в поле класса вынести
+            RepeatFrame repeatFrame = new RepeatFrame();
         }
         showFigure();
     }

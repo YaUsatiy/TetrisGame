@@ -40,7 +40,7 @@ public class FlyFigure {
     }
 
     private boolean canMoveFigure(Figures figure, int sx, int sy){
-        if (coord.x + sx + figure.top.x < 0) return false;//!!!!!!!!!!!!!!!!HZ!!!HZ!!HZ!!
+        if (coord.x + sx + figure.top.x < 0) return false;
         if (coord.x + sx + figure.bot.x >= Config.WIDTH) return false;
         //if (coord.y + sy + figure.top.y < 0) return false;
         if (coord.y + sy + figure.bot.y >= Config.HEIGHT) return false;

@@ -12,7 +12,6 @@ public class AuxiliaryWindow extends JFrame {
     public static boolean difficult;
 
     static Window window;
-    static int sch = 0;
 
     private final static int MENU_HEIGHT = 20;
 
@@ -55,7 +54,7 @@ public class AuxiliaryWindow extends JFrame {
 
         panel.add(continueBtn);
 
-        /////////////////////////////////menu
+        /////////////////////////////////////////////////////////////////////menu
         JMenuBar menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(100,MENU_HEIGHT));
 
@@ -108,7 +107,7 @@ public class AuxiliaryWindow extends JFrame {
                 frameAbout.setVisible(true);
             }
         });
-        ////////////////////end menu
+        /////////////////////////////////////////////////////////////////////end menu
 
         continueBtn.addActionListener(new ActionListener() {
             @Override

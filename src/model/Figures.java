@@ -83,7 +83,7 @@ public enum Figures {
         bot = setBot();
     }
 
-    private Coord setTop(){
+    private Coord setTop(){ //x, y минимальны
         int x = dots.get(0).x;
         int y = dots.get(0).y;
         for (Coord coord : dots){
@@ -93,7 +93,7 @@ public enum Figures {
         return new Coord(x,y);
     }
 
-    private Coord setBot(){
+    private Coord setBot(){ //x, y максимальны
         int x = dots.get(0).x;
         int y = dots.get(0).y;
         for (Coord coord : dots){
